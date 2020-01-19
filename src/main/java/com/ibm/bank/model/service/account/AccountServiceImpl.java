@@ -42,10 +42,9 @@ public class AccountServiceImpl implements AccountService{
 
 
 	@Override
-	public Account updateAccount(String accountNumber, String AccountHolderName, BigDecimal AccountBalance)
-			throws AccountNotFoundException {
+	public Account updateAccount(String accountNumber, String accountHolderName, Double accountBalance) throws AccountNotFoundException {
 		// TODO Auto-generated method stub
-		return accountDao.updateAccount(accountNumber, AccountHolderName, AccountBalance);
+		return accountDao.updateAccount(accountNumber, accountHolderName, accountBalance);
 	}
 
 
