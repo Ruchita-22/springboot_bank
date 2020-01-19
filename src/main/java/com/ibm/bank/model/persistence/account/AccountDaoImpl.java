@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ibm.bank.model.persistence.exception.AccountNotFoundException;
+
 
 
 
@@ -16,6 +18,7 @@ public class AccountDaoImpl implements AccountDao {
 	
 	 @Autowired 
 	 private AccountRepository accountRepository;
+
 
 
 
@@ -40,21 +43,35 @@ public class AccountDaoImpl implements AccountDao {
 
 
 	@Override
-	public Account updateAccount(String accountNumber, String AccountHolderName, BigDecimal AccountBalance)
-			throws AccountNotFoundException {
+	public Account updateAccount(String accountNumber, String accountHolderName, Double accountBalance) throws AccountNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		Optional<Account> account=accountRepository.findById(accountNumber);
+		if(account.isPresent()) {
+			Account account1 = account.get();
+			account1.setAccountBalance(accountBalance);
+			return account1;
+		}
+		else {
+			throw new AccountNotFoundException("No account record exist for given id", null);
+		}
+		
 	}
 
 
 
 	@Override
 	public Account deleteAccount(String accountNumber) throws AccountNotFoundException {
-		return null;
 		// TODO Auto-generated method stub
-		//Optional<Account> account=accountRepository.findById(accountNumber);
+		Optional<Account> account=accountRepository.findById(accountNumber);
+		if(account.isPresent()) {
+			Account account1 = account.get();
+			account1.setStatusFlag("Inactive");
+			return account1;
+		}
+		else {
+			throw new AccountNotFoundException("No account record exist for given id", null);
+		}
 		
-		//return accountRepository.deleteById(accountNumber);
 	}
 
 
@@ -71,9 +88,14 @@ public class AccountDaoImpl implements AccountDao {
 	public Account findAccount(String accountNumber) throws AccountNotFoundException {
 		// TODO Auto-generated method stub
 		Optional<Account> account=accountRepository.findById(accountNumber);
-		System.out.println(account);
-		return null;
+		if(account.isPresent()) {
+			Account account1 = account.get();
+			return account1;
+		}
+		else {
+			throw new AccountNotFoundException("No account record exist for given id", null);
+		}
 	}
-	
+
 
 }
